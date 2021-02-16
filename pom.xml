@@ -7,7 +7,6 @@
         <groupId>no.ssb.rawdata.converter.app</groupId>
         <artifactId>rawdata-converter-app-parent</artifactId>
         <version>0.9.3</version>
-        <relativePath/>
     </parent>
 
     <artifactId>rawdata-converter-app-kostra</artifactId>
