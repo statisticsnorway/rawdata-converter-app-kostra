@@ -1,5 +1,7 @@
 package no.ssb.rawdata.converter.app.kostra;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import no.ssb.dlp.pseudo.core.util.Json;
 import no.ssb.rawdata.api.RawdataMessage;
@@ -21,25 +23,21 @@ import org.apache.avro.generic.GenericRecordBuilder;
 import java.util.Collection;
 
 @Slf4j
+@RequiredArgsConstructor
 public class KostraRawdataConverter implements RawdataConverter {
 
     private static final String RAWDATA_ITEMNAME_ENTRY = "entry";
     private static final String FIELDNAME_MANIFEST = "manifest";
-    private static final String FIELDNAME_DC_MANIFEST = "collector";
+    private static final String FIELDNAME_COLLECTOR = "collector";
     private static final String FIELDNAME_RECORD = "record";
 
-    private final KostraRawdataConverterConfig converterConfig;
-    private final ValueInterceptorChain valueInterceptorChain;
+    @NonNull private final KostraRawdataConverterConfig converterConfig;
+    @NonNull private final ValueInterceptorChain valueInterceptorChain;
 
     private DcManifestSchemaAdapter dcManifestSchemaAdapter;
     private KostraSchemaAdapter kostraSchemaAdapter;
     private Schema manifestSchema;
     private Schema targetAvroSchema;
-
-    public KostraRawdataConverter(KostraRawdataConverterConfig converterConfig, ValueInterceptorChain valueInterceptorChain) {
-        this.converterConfig = converterConfig;
-        this.valueInterceptorChain = valueInterceptorChain;
-    }
 
     @Override
     public void init(Collection<RawdataMessage> sampleRawdataMessages) {
@@ -58,7 +56,7 @@ public class KostraRawdataConverter implements RawdataConverter {
         String targetNamespace = "dapla.rawdata.kostra." + msg.getTopic().orElse("dataset");
 
         manifestSchema = new AggregateSchemaBuilder("dapla.rawdata.manifest")
-          .schema(FIELDNAME_DC_MANIFEST, dcManifestSchemaAdapter.getDcManifestSchema())
+          .schema(FIELDNAME_COLLECTOR, dcManifestSchemaAdapter.getDcManifestSchema())
           .build();
 
         targetAvroSchema = new AggregateSchemaBuilder(targetNamespace)
@@ -93,11 +91,12 @@ public class KostraRawdataConverter implements RawdataConverter {
 
     void addManifest(RawdataMessage rawdataMessage, ConversionResultBuilder resultBuilder) {
         GenericRecord manifest = new GenericRecordBuilder(manifestSchema)
-          .set(FIELDNAME_DC_MANIFEST, dcManifestSchemaAdapter.newRecord(rawdataMessage, valueInterceptorChain))
+          .set(FIELDNAME_COLLECTOR, dcManifestSchemaAdapter.newRecord(rawdataMessage, valueInterceptorChain))
           .build();
 
         resultBuilder.withRecord(FIELDNAME_MANIFEST, manifest);
     }
+
     void convertKostraData(RawdataMessage rawdataMessage, ConversionResultBuilder resultBuilder) {
         byte[] data = rawdataMessage.get(RAWDATA_ITEMNAME_ENTRY);
         KostraDataEnvelope dataEnvelope = Json.toObject(KostraDataEnvelope.class, new String(data));
