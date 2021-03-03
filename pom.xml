@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>rawdata-converter-app-kostra</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <name>Rawdata Converter App - Kostra</name>
 
     <properties>
@@ -21,7 +21,7 @@
         <connection>scm:git:git://github.com/statisticsnorway/rawdata-converter-app-kostra.git</connection>
         <developerConnection>scm:git:git@github.com:statisticsnorway/rawdata-converter-app-kostra.git</developerConnection>
         <url>https://github.com/statisticsnorway/rawdata-converter-app-kostra</url>
-        <tag>HEAD</tag>
+        <tag>1.0.2</tag>
     </scm>
 
     <dependencies>
