@@ -1,5 +1,4 @@
 micronaut:
-  application.name: rawdata-converter-app-kostra
   server:
     port: 8080
 
@@ -22,14 +21,11 @@ services:
 
 pseudo-secrets:
   secret1:
-    content: kensentmewcilAwuVx6NuAsMWLusOSA/ldia40ZugDI=
+    content: testkeycilAwuVx6NuAsMWLusOSA/ldia40ZugDI=
     type: AES256
 
 rawdata.sources:
   kostra:
-    encryption:
-      key: blah
-      salt: blahblah
     rawdata-client:
       provider: filesystem
       local-temp-folder: temp
@@ -58,6 +54,10 @@ rawdata.converter:
         rawdata-samples: 1
         max-records-before-flush: 1000000
         max-seconds-before-flush: 300
+      rawdata-source:
+        name: kostra
+        encryptioy-key: blah
+        encryption-salt: blahblah
       target-storage:
         type: filesystem
         root: file://../localenv/datastore
@@ -74,7 +74,6 @@ rawdata.converter:
       parent: base
       active-by-default: false
       rawdata-source:
-        name: kostra
         topic: kostra-testtopic-202009211735
         initial-position: LAST
       target-storage:
