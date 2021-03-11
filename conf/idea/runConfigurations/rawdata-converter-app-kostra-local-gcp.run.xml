@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="rawdata-converter-app-kostra-local" type="MicronautRunConfigurationType" factoryName="Micronaut">
+  <configuration default="false" name="rawdata-converter-app-kostra-local-gcp" type="MicronautRunConfigurationType" factoryName="Micronaut">
     <module name="rawdata-converter-app-kostra" />
     <option name="alternativeJrePath" />
     <option name="alternativeJrePathEnabled" value="false" />
@@ -8,11 +8,11 @@
     <option name="passParentEnvs" value="true" />
     <option name="programParameters" value="" />
     <option name="shortenCommandLine" />
-    <option name="vmParameters" value="" />
+    <option name="vmParameters" value="-Dmicronaut.bootstrap.context=true" />
     <option name="workingDirectory" value="$MODULE_DIR$" />
     <envs>
-      <env name="MICRONAUT_ENVIRONMENTS" value="local" />
-      <env name="MICRONAUT_CONFIG_FILES" value="conf/application-local.yml" />
+      <env name="MICRONAUT_ENVIRONMENTS" value="local,local-gcp" />
+      <env name="MICRONAUT_CONFIG_FILES" value="conf/bootstrap-local-gcp.yml,conf/application-local.yml" />
     </envs>
     <method v="2">
       <option name="Make" enabled="true" />

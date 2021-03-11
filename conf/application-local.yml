@@ -18,6 +18,11 @@ services:
     impl: MOCK
   dapla-metadata-distributor:
     impl: MOCK
+  secrets:
+    impl: LOCAL
+    overrides:
+      keycloak_rawdataconverter_clientid: rawdata-converter
+      keycloak_rawdataconverter_clientsecret: secretpassword
 
 pseudo-secrets:
   secret1:
@@ -56,7 +61,7 @@ rawdata.converter:
         max-seconds-before-flush: 300
       rawdata-source:
         name: kostra
-        encryptioy-key: blah
+        encryption-key: blah
         encryption-salt: blahblah
       target-storage:
         type: filesystem
